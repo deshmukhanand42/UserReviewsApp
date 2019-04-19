@@ -4,6 +4,7 @@ var router = express.Router();
 var Reviews = require('../controllers/reviews');
 
 router.get('/review/fetch', Reviews.getUserReview);
+router.post('/review/add',Reviews.addUserReview);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

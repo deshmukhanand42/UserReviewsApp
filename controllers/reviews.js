@@ -19,3 +19,30 @@ exports.getUserReview = function (req, res) {
         }
     });
 };
+
+exports.addUserReview = function (req, res) {
+    var userReview = new UserReviews({
+        _id: new mongoose.Types.ObjectId(),
+        date: new Date(),
+        sku: req.body.sku,
+        rating: req.body.rating,
+        title: req.body.title,
+        author: req.body.author,
+        text: req.body.text,
+        source: req.body.source,
+    });
+    userReview.save(function (err, result) {
+        if(err){
+            res.status(500).json({
+                success: false,
+                message: 'Sorry! Something Happened, Please try again'
+            });
+        }
+        else {
+            res.status(200).json({
+                success:true,
+                message:'User Review Added'
+            });
+        }
+    });
+};
