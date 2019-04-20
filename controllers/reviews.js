@@ -20,6 +20,24 @@ exports.getUserReview = function (req, res) {
     });
 };
 
+exports.getoneUserReview = function (req, res) {
+    var id= req.params.id;
+    UserReviews.findById(id, function (err, result) {
+        if(err){
+            res.status(500).json({
+                success: false,
+                message: 'No data corresponding to the id was found'
+            });
+        }
+        else {
+            res.status(200).json({
+                success: true,
+                data: result
+            });
+        }
+    });
+};
+
 exports.addUserReview = function (req, res) {
     var userReview = new UserReviews({
         _id: new mongoose.Types.ObjectId(),
@@ -83,3 +101,5 @@ exports.updateUserReview = function (req, res) {
         }
     });
 };
+
+
