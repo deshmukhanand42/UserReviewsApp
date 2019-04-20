@@ -65,3 +65,21 @@ exports.deleteUserReview = function (req, res) {
         }
     });
 };
+
+exports.updateUserReview = function (req, res) {
+    var id = req.params.id;
+    UserReviews.update({_id:id},{$set: req.body}, function (err, result) {
+        if(err){
+            res.status(500).json({
+                success: false,
+                message: 'Sorry! User Review cannot be updated'
+            });
+        }
+        else {
+            res.status(200).json({
+                success: true,
+                message: "User Review updated"
+            });
+        }
+    });
+};
