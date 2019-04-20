@@ -5,6 +5,7 @@ var Reviews = require('../controllers/reviews');
 
 router.get('/review/fetch', Reviews.getUserReview);
 router.post('/review/add',Reviews.addUserReview);
+router.delete('/review/delete/:id',Reviews.deleteUserReview);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

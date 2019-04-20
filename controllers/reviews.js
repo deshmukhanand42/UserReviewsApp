@@ -46,3 +46,22 @@ exports.addUserReview = function (req, res) {
         }
     });
 };
+
+
+exports.deleteUserReview = function (req, res) {
+    var id = req.params.id;
+    UserReviews.remove({_id:id}, function (err, result) {
+        if(err){
+            res.status(500).json({
+                success:false,
+                message: 'Sorry! Invald User Review selected'
+            });
+        }
+        else {
+            res.status(200).json({
+                success: true,
+                message: 'User Review Deleted'
+            });
+        }
+    });
+};
