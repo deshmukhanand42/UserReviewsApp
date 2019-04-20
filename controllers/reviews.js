@@ -41,7 +41,7 @@ exports.getoneUserReview = function (req, res) {
 exports.addUserReview = function (req, res) {
     var userReview = new UserReviews({
         _id: new mongoose.Types.ObjectId(),
-        date: new Date(),
+        date: req.params.date,
         sku: req.body.sku,
         rating: req.body.rating,
         title: req.body.title,
@@ -86,7 +86,10 @@ exports.deleteUserReview = function (req, res) {
 
 exports.updateUserReview = function (req, res) {
     var id = req.params.id;
-    UserReviews.update({_id:id},{$set: req.body, date: new Date()}, { runValidators: true },function (err, result) {
+    if(!req.body.date){
+        req.body.date=(new Date()).toISOString();
+    }
+    UserReviews.update({_id:id},{$set: req.body }, { runValidators: true },function (err, result) {
         if(err){
             //console.log(err);
             res.status(500).json({

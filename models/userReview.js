@@ -2,7 +2,10 @@ var mongoose = require('mongoose');
 
 var userReviewSchema = mongoose.Schema({
     _id:mongoose.Schema.Types.ObjectId,
-    date:{type:Date},
+    date:{
+        type:String,
+        default: (new Date()).toISOString(),
+    },
     sku:{type:String},
     rating:{
         type:Number,
