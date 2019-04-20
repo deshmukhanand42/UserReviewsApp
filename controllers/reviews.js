@@ -53,7 +53,7 @@ exports.addUserReview = function (req, res) {
         if(err){
             res.status(500).json({
                 success: false,
-                message: 'Sorry! Something Happened, Please try again'
+                message: `Sorry! Unable to add review as : ${err.message}`
             });
         }
         else {
@@ -86,11 +86,12 @@ exports.deleteUserReview = function (req, res) {
 
 exports.updateUserReview = function (req, res) {
     var id = req.params.id;
-    UserReviews.update({_id:id},{$set: req.body, date: new Date()}, function (err, result) {
+    UserReviews.update({_id:id},{$set: req.body, date: new Date()}, { runValidators: true },function (err, result) {
         if(err){
+            //console.log(err);
             res.status(500).json({
                 success: false,
-                message: 'Sorry! User Review cannot be updated'
+                message: `Sorry! User Review cannot be updated because ${err.message}`
             });
         }
         else {
