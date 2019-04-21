@@ -5,29 +5,15 @@ var assert = require('assert');
 var UserReviews = require('../models/userReview').UserReviews;
 
 exports.getUserReview = function (req, res) {
-    UserReviews.find({}, function (err, result) {
+    var query = {};
+    if(req.query.id){
+        query['_id']=req.query.id;
+    }
+    UserReviews.find(query, function (err, result) {
         if(err){
             res.status(500).json({
                 success:false,
                 message: ' Sorry! No result avaiable'
-            });
-        }
-        else {
-            res.status(200).json({
-                success: true,
-                data: result
-            });
-        }
-    });
-};
-
-exports.getoneUserReview = function (req, res) {
-    var id= req.params.id;
-    UserReviews.findById(id, function (err, result) {
-        if(err){
-            res.status(500).json({
-                success: false,
-                message: 'No data corresponding to the id was found'
             });
         }
         else {
@@ -109,8 +95,16 @@ exports.updateUserReview = function (req, res) {
 
 
 exports.getAvgRating = function (req, res) {
+    var match={};
+    if(req.query.sku){
+        match["sku"] = req.query.sku;
+    }
     UserReviews.aggregate([
         {
+            $match : match
+        },
+        {
+
             $group : {
                 _id: "$sku" ,
                 AvgRating: {$avg: "$rating"},
@@ -143,7 +137,14 @@ exports.getAvgRating = function (req, res) {
 };
 
 exports.getUserAvgRating = function (req, res) {
+    var match={};
+    if(req.query.user){
+        match["author"] = req.query.user;
+    }
     UserReviews.aggregate([
+        {
+            $match : match
+        },
         {
             $group : {
                 _id: "$author" ,

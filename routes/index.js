@@ -6,7 +6,6 @@ var Reviews = require('../controllers/reviews');
 router.get('/review/fetch', Reviews.getUserReview);
 router.get('/review/productaverage', Reviews.getAvgRating);
 router.get('/review/useraverage', Reviews.getUserAvgRating);
-router.get('/review/:id', Reviews.getoneUserReview);
 router.post('/review/add', Reviews.addUserReview);
 router.delete('/review/delete/:id', Reviews.deleteUserReview);
 router.patch('/review/update/:id', Reviews.updateUserReview);
