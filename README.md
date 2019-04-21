@@ -10,3 +10,5 @@
     '/review/:id' - To get review by id  
     '/review/update/:id' - To update a review by id  
     '/review/delete/:id' - To delete a review by id  
+    '/review/productaverage' - To get average ratings per product  
+    '/review/useraverage' - To get average ratings per user  
