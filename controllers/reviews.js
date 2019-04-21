@@ -113,7 +113,8 @@ exports.getAvgRating = function (req, res) {
         {
             $group : {
                 _id: "$sku" , 
-                avgRating : {$avg: "$rating"}
+                avgRating : {$avg: "$rating"},
+                numberOfReviews: {$sum: 1}
             }
         }
     ], function (err, result){
@@ -139,7 +140,8 @@ exports.getUserAvgRating = function (req, res) {
         {
             $group : {
                 _id: "$author" , 
-                avgRating : {$avg: "$rating"}
+                avgRating : {$avg: "$rating"},
+                numberOfReviews: {$sum: 1}
             }
         }
     ], function (err, result){
