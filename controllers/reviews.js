@@ -112,9 +112,16 @@ exports.getAvgRating = function (req, res) {
     UserReviews.aggregate([
         {
             $group : {
-                _id: "$sku" , 
-                avgRating : {$avg: "$rating"},
-                numberOfReviews: {$sum: 1}
+                _id: "$sku" ,
+                AvgRating: {$avg: "$rating"},
+            }
+        },
+        {
+            $project: {
+                _id : 0,
+                SKU : "$_id",
+                AverageRating: "$AvgRating",
+                NumberOfReviews: {$sum: 1}
             }
         }
     ], function (err, result){
@@ -139,9 +146,16 @@ exports.getUserAvgRating = function (req, res) {
     UserReviews.aggregate([
         {
             $group : {
-                _id: "$author" , 
-                avgRating : {$avg: "$rating"},
-                numberOfReviews: {$sum: 1}
+                _id: "$author" ,
+                AvgRating: {$avg: "$rating"},
+            }
+        },
+        {
+            $project: {
+                _id : 0,
+                User : "$_id",
+                AverageRating: "$AvgRating",
+                NumberOfReviews: {$sum: 1}
             }
         }
     ], function (err, result){
