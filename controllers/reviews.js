@@ -1,6 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose');
+var assert = require('assert');
 var UserReviews = require('../models/userReview').UserReviews;
 
 exports.getUserReview = function (req, res) {
@@ -107,3 +108,54 @@ exports.updateUserReview = function (req, res) {
 };
 
 
+exports.getAvgRating = function (req, res) {
+    UserReviews.aggregate([
+        {
+            $group : {
+                _id: "$sku" , 
+                avgRating : {$avg: "$rating"}
+            }
+        }
+    ], function (err, result){
+        if(err){
+            //console.log(err);
+            res.status(500).json({
+                success: false,
+                message: `Sorry! Error: ${err.message}`
+            });
+        }
+        else {
+            res.status(200).json({
+                success: true,
+                data: result
+            });
+        }
+    }
+    );
+};
+
+exports.getUserAvgRating = function (req, res) {
+    UserReviews.aggregate([
+        {
+            $group : {
+                _id: "$author" , 
+                avgRating : {$avg: "$rating"}
+            }
+        }
+    ], function (err, result){
+        if(err){
+            //console.log(err);
+            res.status(500).json({
+                success: false,
+                message: `Sorry! Error: ${err.message}`
+            });
+        }
+        else {
+            res.status(200).json({
+                success: true,
+                data: result
+            });
+        }
+    }
+    );
+};
